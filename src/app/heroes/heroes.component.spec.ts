@@ -26,5 +26,25 @@ describe('Heroes Component', () => {
 
       expect(component.heroes.length).toBe(2);
     });
+
+    it('should call deleteHero', () => {
+      mockHeroService.deleteHero.and.returnValue(of(true));
+      component.heroes = HEROES;
+
+      component.delete(HEROES[2]);
+
+      expect(mockHeroService.deleteHero).toHaveBeenCalled();
+    });
+
+    it('should call deleteHero with correct hero', () => {
+      mockHeroService.deleteHero.and.returnValue(of(true));
+      component.heroes = HEROES;
+
+      component.delete(HEROES[2]);
+
+      expect(mockHeroService.deleteHero).toHaveBeenCalledWith(HEROES[2]);
+
+      // note -> another test scenario try expection that deleteHero is called and returns subscribe
+    });
   });
 });
