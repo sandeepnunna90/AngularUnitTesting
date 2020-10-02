@@ -10,6 +10,12 @@ import { HeroComponent } from "./hero.component";
 // in the template eg. igonres router link directive as we have not imported and set it up
 // in this case.
 
+// NativeElement  -> is a standard HTML DOM element - plain old HTML
+// Exposes the underlying DOM API to access HTML elements
+
+// DetectChanges -> Updates the bindings in the template
+// updates the hero name value in template e.g {{ Hero.name }}
+
 describe('HeroComponent (shallow tests)', () => {
 
   let fixture: ComponentFixture<HeroComponent>;
@@ -27,5 +33,12 @@ describe('HeroComponent (shallow tests)', () => {
     fixture.componentInstance.hero = { id: 1, name: 'IronMan', strength: 8 };
 
     expect(fixture.componentInstance.hero.name).toEqual('IronMan');
+  });
+
+  it('should render the hero name in an anchor tag', () => {
+    fixture.componentInstance.hero = { id: 1, name: 'IronMan', strength: 8 };
+    fixture.detectChanges()
+
+    expect(fixture.nativeElement.querySelector('a').textContent).toContain('IronMan');
   });
 });
