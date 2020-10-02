@@ -37,12 +37,27 @@ describe('HeroesComponent (deep tests)', () => {
     });
 
     fixture = TestBed.createComponent(HeroesComponent);
-    mockHeroService.getHeroes.and.returnValue(of(HEROES));
-
-    fixture.detectChanges();
   });
 
-  it('should be true', () => {
-    expect(true).toBe(true);
+  it('should render each hero as a hero component', () => {
+    //arrange
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+
+    //act
+    fixture.detectChanges();
+
+    let heroComponentDEs = fixture.debugElement.queryAll(By.directive(HeroComponent));
+
+    expect(heroComponentDEs.length).toEqual(3);
+
+    expect(heroComponentDEs[0].componentInstance.hero.name).toEqual('SpiderMan');
+    expect(heroComponentDEs[1].componentInstance.hero.name).toEqual('IronMan');
+    expect(heroComponentDEs[2].componentInstance.hero.name).toEqual('Hulk');
+
+    // OR - we are asserting hero objects
+
+    for (let i = 0; i < heroComponentDEs.length; i++) {
+      expect(heroComponentDEs[i].componentInstance.hero).toEqual(HEROES[i]);
+    }
   });
 });
