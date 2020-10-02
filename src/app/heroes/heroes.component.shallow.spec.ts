@@ -4,6 +4,7 @@ import { HeroService } from "../hero.service";
 import { HeroesComponent } from "./heroes.component";
 import { Hero } from '../hero';
 import { of } from "rxjs"; // used for observables
+import { By } from "@angular/platform-browser";
 
 
 // include providers to include dependencies in the TestBed testing module
@@ -60,5 +61,13 @@ describe('HeroesComponent (shallow tests)', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.heroes.length).toEqual(3);
-  })
+  });
+
+  it('should create one li for each hero', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.queryAll(By.css('li')).length).toEqual(3);
+
+  });
 });
