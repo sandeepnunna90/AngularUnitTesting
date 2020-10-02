@@ -16,6 +16,8 @@ import { By } from "@angular/platform-browser";
 
 // mockHeroService, mock the methods that are called via heroService in heroesComponent
 
+// detectChanges -> does change detection, it basically gets Angular to fire ngOnInit() method
+
 // NO_ERRORS_SCHEMA -> doesn't detect misspelt html element names and the test doesn't
 // return errors for these cases.
 
