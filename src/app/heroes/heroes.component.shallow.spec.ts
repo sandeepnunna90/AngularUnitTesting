@@ -1,7 +1,8 @@
-import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { Component, Input, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { HeroService } from "../hero.service";
 import { HeroesComponent } from "./heroes.component";
+import { Hero } from '../hero';
 import { of } from "rxjs"; // used for observables
 
 
@@ -13,6 +14,18 @@ import { of } from "rxjs"; // used for observables
 // the original HeroService which does http calls. (we don't want to test http calls here)
 
 // mockHeroService, mock the methods that are called via heroService in heroesComponent
+
+// NO_ERRORS_SCHEMA -> doesn't detect misspelt html element names and the test doesn't
+// return errors for these cases.
+
+@Component({
+  selector: 'app-hero',
+  template: '<div></div>',
+})
+class FakeHeroComponent {
+  @Input() hero: Hero;
+}
+
 
 describe('HeroesComponent (shallow tests)', () => {
   let fixture: ComponentFixture<HeroesComponent>;
@@ -29,11 +42,14 @@ describe('HeroesComponent (shallow tests)', () => {
     mockHeroService = jasmine.createSpyObj(['getHeroes', 'addHero', 'deleteHero'])
 
     TestBed.configureTestingModule({
-      declarations: [HeroesComponent],
+      declarations: [
+        HeroesComponent,
+        FakeHeroComponent
+      ],
       providers: [
         { provide: HeroService, useValue: mockHeroService }
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      // schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(HeroesComponent);
