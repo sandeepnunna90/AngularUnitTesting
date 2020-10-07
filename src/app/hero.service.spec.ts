@@ -42,7 +42,7 @@ describe('Hero Service', () => {
         (heroService: HeroService, testingController: HttpTestingController) => {
           heroService.getHero(5).subscribe();
 
-          const req = testingController.expectOne('api/heroes/4');
+          const req = testingController.expectOne('api/heroes/5');
           req.flush({ id: 5, name: 'BlackWidow', strength: 7 });
         }));
   });
